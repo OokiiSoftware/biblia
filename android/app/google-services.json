@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "499907712443",
+    "project_id": "biblia-oki",
+    "storage_bucket": "biblia-oki.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:499907712443:android:deb1dfa1511a436873609e",
+        "android_client_info": {
+          "package_name": "com.ookiisoftware.biblia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "499907712443-l4va5snsedpvj2hjebm41okjsnc885eb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ookiisoftware.biblia",
+            "certificate_hash": "704c32eae3735edac401ba1a3e061aff9641c7ca"
+          }
+        },
+        {
+          "client_id": "499907712443-1uf0vr99591oo007ige54u0ju1209ctc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQrI7wBKPrSaRfHW8QvJjtILcBc4dF4ik"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "499907712443-1uf0vr99591oo007ige54u0ju1209ctc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

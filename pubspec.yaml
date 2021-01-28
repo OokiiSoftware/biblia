@@ -1,0 +1,50 @@
+name: Biblia
+description: Textos da biblia com referencias de explicações.
+
+version: 1.0.5+5
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  dio: any
+  dynamic_theme: ^1.0.1
+  firebase_auth: ^0.20.0+1
+  firebase_database: ^6.0.0
+  firebase_storage: ^7.0.0
+  google_sign_in: ^4.5.6
+  package_info: ^0.4.3+2
+  path_provider: ^1.6.24
+  random_string: ^2.1.0
+  scrollable_positioned_list: ^0.1.9
+  shared_preferences: ^0.5.12+4
+  url_launcher: ^5.7.10
+  youtube_player_flutter: ^7.0.0+7
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.0
+
+dev_dependencies:
+  flutter_launcher_icons: ^0.7.5
+  flutter_launcher_name: ^0.0.1
+  flutter_test:
+    sdk: flutter
+
+flutter_icons:
+  adaptive_icon_background: '#2f557f'
+  adaptive_icon_foreground: "assets/icons/ic_launcher_adaptive.png"
+  image_path_android: "assets/icons/ic_launcher.png"
+  image_path_ios: "assets/icons/ic_launcher_ios.png"
+  android: true
+  ios: true
+
+flutter_launcher_name:
+  name: 'Bíblia'
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/icons/
