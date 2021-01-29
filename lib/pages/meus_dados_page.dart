@@ -23,7 +23,7 @@ class _State extends State<MeusDadosPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text(Titles.MINHAS_REFERENCIAS_PAGE, style: Styles.appBarText),
+          title: OkiAppBarText(Titles.MINHAS_REFERENCIAS_PAGE),
         actions: [
           IconButton(
             tooltip: 'Adicionar',
@@ -38,8 +38,8 @@ class _State extends State<MeusDadosPage> {
           itemBuilder: (context, index) {
             Referencia item = _data[index];
             return ListTile(
-              title: Text(item.titulo),
-              subtitle: Text(item.data.substring(0, item.data.indexOf(' ') ?? 0)),
+              title: OkiText(item.titulo),
+              subtitle: OkiText(item.data.substring(0, item.data.indexOf(' ') ?? 0)),
               trailing: IconButton(
                 icon: Icon(Icons.delete_forever),
                 onPressed: () => _onDeleteItem(item),

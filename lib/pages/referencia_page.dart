@@ -39,16 +39,16 @@ class _State extends State<ReferenciasPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('${livro.nome} $capitulo: $versiculo', style: Styles.appBarText)),
+      appBar: AppBar(title: OkiAppBarText('${livro.nome} $capitulo: $versiculo')),
       body:referencias.isEmpty ?
-      ListTile(title: Text('Sem Referências')) :
+      ListTile(title: OkiText('Sem Referências')) :
       ListView.builder(
         itemCount: referencias.length,
           itemBuilder: (context, index) {
             Referencia item = referencias[index];
             return ListTile(
-              title: Text(item.titulo),
-              subtitle: Text(item.autor),
+              title: OkiTitleText(item.titulo),
+              subtitle: OkiText(item.autor),
               trailing: getTrailingIcon(item),
               onTap: () => _onReferenciaClick(item),
             );
@@ -197,7 +197,7 @@ class _State2 extends State<ReferenciaPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(Titles.REFERENCIA_PAGE, style: Styles.appBarText),
+          title: OkiAppBarText(Titles.REFERENCIA_PAGE),
           actions: [
             if (_isMyRef)...[
               IconButton(
@@ -217,14 +217,14 @@ class _State2 extends State<ReferenciaPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ListTile(
-                title: Text(refecencia.titulo, style: Styles.titleText),
-                subtitle: Text('Autor: ${refecencia.autor}'),
+                title: OkiTitleText(refecencia.titulo),
+                subtitle: OkiText('Autor: ${refecencia.autor}'),
               ),
-              text(refecencia.descricao),
+              OkiText(refecencia.descricao),
 
               if (refecencia.url.isNotEmpty)
                 ElevatedButton(
-                  child: Text('Abrir Link'),
+                  child: OkiText('Abrir Link'),
                   onPressed: () => Aplication.openUrl(refecencia.url),
                 ),
             ],
@@ -232,8 +232,7 @@ class _State2 extends State<ReferenciaPage> {
         ),
         floatingActionButton: _inProgress ? CircularProgressIndicator() :
         _isMyRef ? null : FloatingActionButton.extended(
-          label: Text(
-              _referenciaLida ? MyTexts.DESMARCAR : MyTexts.MARCAR_COMO_VISTO),
+          label: OkiText(_referenciaLida ? MyTexts.DESMARCAR : MyTexts.MARCAR_COMO_VISTO),
           backgroundColor: _referenciaLida ? Colors.green : null,
           onPressed: _onMarcarComoVisto,
         ),
@@ -250,12 +249,6 @@ class _State2 extends State<ReferenciaPage> {
     if (_user?.referencias?.containsKey(refecencia.id) ?? false) {
       _referenciaLida = _user.referencias[refecencia.id].toString().compareTo(refecencia.data) >= 0;
     }
-  }
-
-  Widget text(String text) {
-    return Container(
-      child: Text(text),
-    );
   }
 
   void _onMarcarComoVisto() async {
@@ -357,7 +350,7 @@ class _StateAddPage extends State<ReferenciasAddPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(Titles.REFERENCIA_ADD_PAGE, style: Styles.appBarText),
+          title: OkiAppBarText(Titles.REFERENCIA_ADD_PAGE),
           actions: [
             IconButton(
               tooltip: 'Limpar Campos',
@@ -429,17 +422,17 @@ class _StateAddPage extends State<ReferenciasAddPage> {
                 SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      child: Text(MyTexts.ADD_LIVRO),
+                      child: OkiText(MyTexts.ADD_LIVRO),
                       onPressed: _onAddLivro,
                     )
                 )
               else ...[
                   Padding(padding: EdgeInsets.only(top: 10)),
-                  Text('Não é possível alterar os livros referenciados.'),
+                OkiText('Não é possível alterar os livros referenciados.'),
                   Row(
                     children: [
                       Expanded(
-                        child: Text(
+                        child: OkiText(
                             'Se você precisa alterar os livros referenciados, '
                                 'exclua essa referência clicando no icone ao lado e crie uma nova.'),
                       ),
@@ -452,12 +445,12 @@ class _StateAddPage extends State<ReferenciasAddPage> {
                 ],
 
               if (referenciasIsEmpty)
-                Text('Adicione referências', style: Styles.textEror),
+                OkiErrorText('Adicione referências'),
 
               for (var item in referencias.values)...[
                 ListTile(
-                  title: Text(item.nome),
-                  subtitle: Text(item.toString(incluirLinvo: false, breakLine: true)),
+                  title: OkiText(item.nome),
+                  subtitle: OkiText(item.toString(incluirLinvo: false, breakLine: true)),
                   trailing: IconButton(
                     icon: Icon(Icons.delete_forever),
                     onPressed: () => _onReferenciaRemove(item),
@@ -565,13 +558,13 @@ class _StateAddPage extends State<ReferenciasAddPage> {
   void _onHelpLinkClick() {
     var title = 'Link';
     var content = [
-      Text('O que devo colocar.'),
-      Text('* Link da página com a explicação dos versículos referenciados.'),
-      Text('* Link do vídeo com a explicação dos versículos referenciados.'),
+      OkiText('O que devo colocar.'),
+      OkiText('* Link da página com a explicação dos versículos referenciados.'),
+      OkiText('* Link do vídeo com a explicação dos versículos referenciados.'),
       Divider(),
-      Text('O que NÃO devo colocar.'),
-      Text('* Páginas com vários links que induzem o usuário a procurar pela explicação.', style: Styles.textEror),
-      Text('* Link de \'canais\' do YouTube que induzem o usuário a procurar pelo vídeo com a explicação.', style: Styles.textEror),
+      OkiText('O que NÃO devo colocar.'),
+      OkiErrorText('* Páginas com vários links que induzem o usuário a procurar pela explicação.'),
+      OkiErrorText('* Link de \'canais\' do YouTube que induzem o usuário a procurar pelo vídeo com a explicação.'),
     ];
     DialogBox.dialogOK(context, title: title, content: content);
   }
@@ -579,8 +572,8 @@ class _StateAddPage extends State<ReferenciasAddPage> {
   void _onDescricaoLinkClick() {
     var title = 'Descrição';
     var content = [
-      Text('Aqui você pode colocar uma breve explicação do conteúdo do link.'),
-      Text('Se não tiver um link, você pode colocar aqui toda a explicação dos versículos referenciados.'),
+      OkiText('Aqui você pode colocar uma breve explicação do conteúdo do link.'),
+      OkiText('Se não tiver um link, você pode colocar aqui toda a explicação dos versículos referenciados.'),
     ];
     DialogBox.dialogOK(context, title: title, content: content);
   }
@@ -588,7 +581,7 @@ class _StateAddPage extends State<ReferenciasAddPage> {
   void _onAutorLinkClick() {
     var title = 'Autor';
     var content = [
-      Text('Seu nome que será exibido aos usuários.'),
+      OkiText('Seu nome que será exibido aos usuários.'),
     ];
     DialogBox.dialogOK(context, title: title, content: content);
   }

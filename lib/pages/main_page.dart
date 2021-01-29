@@ -61,7 +61,6 @@ class _State extends State<MainPage> with SingleTickerProviderStateMixin {
     String bibliaVersion = Biblia.instance.versao;
     bool userLogado = FirebaseOki.isLogado;
 
-    var draewrHeaderTextColor = Colors.white;
     var draewrIconColor = OkiTheme.text;
 
     if (bibliaVersion.length > 3)
@@ -73,9 +72,7 @@ class _State extends State<MainPage> with SingleTickerProviderStateMixin {
             // mainAxisAlignment: MainAxisAlignment.center,
             children: [
               if (isPesquisa)...[
-                Text('$livroName $titleCapitulo',
-                  style: TextStyle(color: OkiColors.textDark, fontSize: 20),
-                ),
+                OkiAppBarText('$livroName $titleCapitulo'),
               ] else...[
                 //LivroName
                 Expanded(
@@ -92,9 +89,7 @@ class _State extends State<MainPage> with SingleTickerProviderStateMixin {
                         child: Center(
                           child: FittedBox(
                             fit: BoxFit.fitWidth,
-                            child: Text(livroName, maxLines: 1,
-                              style: TextStyle(color: OkiColors.textDark, fontSize: 20),
-                            ),
+                            child: OkiAppBarText(livroName),
                           ),
                         ),
                       ),
@@ -114,8 +109,7 @@ class _State extends State<MainPage> with SingleTickerProviderStateMixin {
                       padding: EdgeInsets.fromLTRB(5, 5, 10, 5),
                       color: OkiTheme.primaryDark,
                       child: Center(
-                        child: Text(titleCapitulo,
-                          style: TextStyle(color: OkiColors.textDark, ),
+                        child: OkiAppBarText(titleCapitulo,
                         ),
                       ),
                     ),
@@ -185,13 +179,7 @@ class _State extends State<MainPage> with SingleTickerProviderStateMixin {
                     // Nome
                     Align(
                       alignment: Alignment.centerLeft,
-                      child: Text(
-                        AppResources.APP_NAME,
-                        style: TextStyle(
-                          color: draewrHeaderTextColor,
-                          fontSize: 18,
-                        ),
-                      ),
+                      child: OkiTitleText(AppResources.APP_NAME),
                     ),
                     // Email
                     Align(
@@ -211,8 +199,7 @@ class _State extends State<MainPage> with SingleTickerProviderStateMixin {
             if (FirebaseOki?.userOki?.hasAcessoEspecial ?? false)
               ListTile(
                 leading: Icon(Icons.online_prediction, color: draewrIconColor),
-                title: Text('Minhas Referências'),
-                // subtitle: Text('Informações'),
+                title: OkiText('Minhas Referências'),
                 onTap: () {
                   _closeDrawer(context);
                   _onMenuItemSelected(MenuMain.minhas_referencias);
@@ -221,8 +208,7 @@ class _State extends State<MainPage> with SingleTickerProviderStateMixin {
 
             ListTile(
               leading: Icon(Icons.menu_book, color: draewrIconColor),
-              title: Text('Versões'),
-              // subtitle: Text('Informações'),
+              title: OkiText('Versões'),
               onTap: () {
                 _closeDrawer(context);
                 _onMenuItemSelected(MenuMain.versoes);
@@ -231,8 +217,7 @@ class _State extends State<MainPage> with SingleTickerProviderStateMixin {
             // Dicas
             ListTile(
               leading: Icon(Icons.help_outline, color: draewrIconColor),
-              title: Text('Ver Dicas'),
-              // subtitle: Text('Informações'),
+              title: OkiText('Ver Dicas'),
               onTap: () {
                 _closeDrawer(context);
                 _onMenuItemSelected(MenuMain.dicas);
@@ -241,8 +226,7 @@ class _State extends State<MainPage> with SingleTickerProviderStateMixin {
             // Sobre
             ListTile(
               leading: Icon(Icons.info_outline, color: draewrIconColor),
-              title: Text(MenuMain.sobre),
-              // subtitle: Text('Informações'),
+              title: OkiText(MenuMain.sobre),
               onTap: () {
                 _closeDrawer(context);
                 _onMenuItemSelected(MenuMain.sobre);
@@ -253,7 +237,7 @@ class _State extends State<MainPage> with SingleTickerProviderStateMixin {
             if (userLogado)
               ListTile(
                 leading: Icon(Icons.logout, color: draewrIconColor),
-                title: Text(MenuMain.logout),
+                title: OkiText(MenuMain.logout),
                 onTap: () {
                   _closeDrawer(context);
                   _onMenuItemSelected(MenuMain.logout);
@@ -262,7 +246,7 @@ class _State extends State<MainPage> with SingleTickerProviderStateMixin {
             else
               ListTile(
                 leading: Icon(Icons.login, color: draewrIconColor),
-                title: Text(MenuMain.login),
+                title: OkiText(MenuMain.login),
                 onTap: () {
                   _closeDrawer(context);
                   _onMenuItemSelected(MenuMain.login);
@@ -273,7 +257,7 @@ class _State extends State<MainPage> with SingleTickerProviderStateMixin {
             // Config
             ListTile(
               leading: Icon(Icons.settings, color: draewrIconColor),
-              title: Text(MenuMain.config),
+              title: OkiText(MenuMain.config),
               onTap: () {
                 _closeDrawer(context);
                 _onMenuItemSelected(MenuMain.config);
@@ -337,6 +321,7 @@ class _State extends State<MainPage> with SingleTickerProviderStateMixin {
 
   void init() async {
     await Future.delayed(Duration(milliseconds: 100));
+    await _checkNovidades();
 
     pagesCount = livro.capitulos.length;
     if (tabController == null) {
@@ -366,16 +351,31 @@ class _State extends State<MainPage> with SingleTickerProviderStateMixin {
     _mostrarDicas();
   }
 
+  Future<void> _checkNovidades() async {
+    bool dicasMostradas = Preferences.getBool(PreferencesKey.NOVIDADES, padrao: false);
+    if (!dicasMostradas) {
+      Preferences.setBool(PreferencesKey.NOVIDADES, true);
+      var title = 'Novidades';
+      var content = [
+        OkiText('Altere o tamanho dos textos em Configurações'),
+        OkiText('Deseja alterar agora?'),
+      ];
+      var result = await DialogBox.dialogSimNao(context, title: title, content: content);
+      if (result.isPositive)
+        await Navigate.to(context, ConfigPage());
+    }
+  }
+
   void _mostrarDicas({bool ignorePreferences = false}) {
     bool dicasMostradas = Preferences.getBool(PreferencesKey.ULTIMO_TUTORIAL_OK, padrao: false);
     if (!dicasMostradas || ignorePreferences) {
       var title = 'Dicas';
       var content = [
-        Text('- Clique normalmente em um versículo para ver referências com explicações.'),
+        OkiText('- Clique normalmente em um versículo para ver referências com explicações.'),
         Divider(),
-        Text('- Clique e mantenha pressionado em um versículo para selecionar e adicionar marcações.'),
+        OkiText('- Clique e mantenha pressionado em um versículo para selecionar e adicionar marcações.'),
         Divider(),
-        Text('- Deslize até o final e você poderá marcar este capitulo como lido.'),
+        OkiText('- Deslize até o final e você poderá marcar este capitulo como lido.'),
       ];
       DialogBox.dialogOK(context, title: title, content: content);
 
@@ -451,7 +451,7 @@ class _State extends State<MainPage> with SingleTickerProviderStateMixin {
 
   void _logout() async {
     var title = 'Logout';
-    var content = [Text('Deseja sair de sua conta?')];
+    var content = [OkiText('Deseja sair de sua conta?')];
     var result = await DialogBox.dialogSimNao(context, title: title, content: content);
     if (result.isPositive) {
       _setInProgress(true);

@@ -95,8 +95,9 @@ class MenuMain {
 }
 
 class Tags {
-  static const String MainPage = 'MainPage';
   static const String CapituloFragment = 'CapituloFragment';
+  static const String ConfigPage = 'ConfigPage';
+  static const String MainPage = 'MainPage';
   static const String PesquisaPage = 'PesquisaPage';
   static const String SelecionarLivroPage = 'SelecionarLivroPage';
   static const String SelecionarCapituloPage = 'SelecionarCapituloPage';

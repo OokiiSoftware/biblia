@@ -1,4 +1,6 @@
+import 'package:Biblia/auxiliar/config.dart';
 import 'package:Biblia/model/import.dart';
+import 'package:Biblia/res/import.dart';
 import 'package:flutter/material.dart';
 import 'colors.dart';
 import 'icons.dart';
@@ -15,9 +17,9 @@ class DropDownMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     List<DropdownMenuItem<String>> temp = new List();
     for (String value in items) {
-      temp.add(new DropdownMenuItem(value: value, child: new Text(value)));
+      temp.add(new DropdownMenuItem(value: value, child: new OkiText(value)));
     }
-    return DropdownButton(value: value, disabledHint: Text(value), items: temp, onChanged: onChanged);
+    return DropdownButton(value: value, disabledHint: OkiText(value), items: temp, onChanged: onChanged);
   }
 }
 
@@ -49,10 +51,11 @@ class TextFieldOki extends StatelessWidget{
         maxLines: maxLines,
         minLines: 1,
         keyboardType: keyboardType,
+        style: Styles.normalText,
         decoration: InputDecoration(
             suffixIcon: icon,
             labelText: hint,
-            labelStyle: TextStyle(color: textIsEmpty ? OkiTheme.textError : OkiTheme.text)
+            labelStyle: TextStyle(color: textIsEmpty ? OkiTheme.textError : OkiTheme.text, fontSize: Config.fontSize)
         ),
         onTap: onTap,
       ),
@@ -102,15 +105,15 @@ class VersiculoLayout extends StatelessWidget {
     }
 
     if (inicio == 0)
-      spanTextList.add(TextSpan(text: '$specialText\n', style: TextStyle(fontWeight: FontWeight.bold, color: _getTextColor(item.marker))));
+      spanTextList.add(TextSpan(text: '$specialText\n', style: TextStyle(fontWeight: FontWeight.bold, fontSize: Config.fontSize, color: _getTextColor(item.marker))));
 
     textList.add('  ${item.key}: ');
     textList.addAll(normalText.split(specialText));
 
     textList.forEach((element) {
-      spanTextList.add(TextSpan(text: element, style: TextStyle(color: _getTextColor(item.marker))));
+      spanTextList.add(TextSpan(text: element, style: TextStyle(color: _getTextColor(item.marker), fontSize: Config.fontSize)));
       if (inicio != 0 && i > 0)
-        spanTextList.add(TextSpan(text: specialText, style: TextStyle(fontWeight: FontWeight.bold, color: _getTextColor(item.marker))));
+        spanTextList.add(TextSpan(text: specialText, style: TextStyle(fontWeight: FontWeight.bold, fontSize: Config.fontSize, color: _getTextColor(item.marker))));
       i++;
     });
     if (inicio != 0 && spanTextList.length > 0)
@@ -118,7 +121,7 @@ class VersiculoLayout extends StatelessWidget {
     return RichText(
         text: TextSpan(
             style: new TextStyle(
-              fontSize: 14.0,
+              fontSize: Config.fontSize,
               color: OkiTheme.text,
             ),
             children: spanTextList
@@ -157,18 +160,51 @@ class PesquisaLayout extends StatelessWidget {
 
     textList.forEach((element) {
       spanTextList.add(TextSpan(text: element));
-      spanTextList.add(TextSpan(text: pesquisaText, style: TextStyle(fontWeight: FontWeight.bold, color: Colors.green)));
+      spanTextList.add(TextSpan(text: pesquisaText, style: TextStyle(fontWeight: FontWeight.bold, fontSize: Config.fontSize, color: Colors.green)));
     });
     if (spanTextList.length > 0)
       spanTextList.removeAt(spanTextList.length -1);
     return RichText(
         text: TextSpan(
             style: new TextStyle(
-              fontSize: 14.0,
+              fontSize: Config.fontSize,
               color: OkiTheme.text,
             ),
             children: spanTextList
         )
     );
+  }
+}
+
+class OkiText extends StatelessWidget {
+  final String text;
+  OkiText(this.text);
+  @override
+  Widget build(BuildContext context) {
+    return Text(text, style: Styles.normalText);
+  }
+}
+class OkiTitleText extends StatelessWidget {
+  final String text;
+  OkiTitleText(this.text);
+  @override
+  Widget build(BuildContext context) {
+    return Text(text, style: Styles.titleText);
+  }
+}
+class OkiAppBarText extends StatelessWidget {
+  final String text;
+  OkiAppBarText(this.text);
+  @override
+  Widget build(BuildContext context) {
+    return Text(text, style: Styles.appBarText);
+  }
+}
+class OkiErrorText extends StatelessWidget {
+  final String text;
+  OkiErrorText(this.text);
+  @override
+  Widget build(BuildContext context) {
+    return Text(text, style: Styles.textEror);
   }
 }

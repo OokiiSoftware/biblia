@@ -46,7 +46,7 @@ class _State extends State<SelecionarLivroPage> {
     UserOki user = FirebaseOki.userOki;
 
     return Scaffold(
-      appBar: AppBar(title: Text('Livros', style: Styles.appBarText)),
+      appBar: AppBar(title: OkiAppBarText('Livros')),
       body: ScrollablePositionedList.builder(
         itemScrollController: itemScrollController,
         itemCount: livros.length,
@@ -67,10 +67,10 @@ class _State extends State<SelecionarLivroPage> {
                   height: 40,
                   width: 40,
                   color: thisLivro ? Colors.grey : item.isNovoTestamento ? OkiTheme.accent : OkiTheme.accentLight,
-                  child: Center(child: Text(item.abreviacao, style: Styles.appBarText)),
+                  child: Center(child: OkiAppBarText(item.abreviacao)),
                 ),
               ),
-              title: Text(item.nome),
+              title: OkiText(item.nome),
               trailing: userLogado ? ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(50)),
                 child: Container(
@@ -196,7 +196,7 @@ class _StateCapitulo extends State<SelecionarCapituloPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(livro.nome, style: Styles.appBarText)),
+      appBar: AppBar(title: OkiAppBarText(livro.nome)),
       body: GridView.builder(
           padding: EdgeInsets.fromLTRB(2, 2, 2, 80),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -220,7 +220,7 @@ class _StateCapitulo extends State<SelecionarCapituloPage> {
       ),
       floatingActionButton: isSingleReturn ? null :
       FloatingActionButton(
-        child: Text('OK'),
+        child: OkiText('OK'),
         onPressed: _onOk,
       ),
     );
@@ -300,7 +300,7 @@ class _StateVersiculo extends State<SelecionarVersiculoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('${Strings.CAPITULO} ${capitulo.key}', style: Styles.appBarText)),
+      appBar: AppBar(title: OkiAppBarText('${Strings.CAPITULO} ${capitulo.key}')),
       body: GridView.builder(
           padding: EdgeInsets.fromLTRB(2, 2, 2, 80),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -323,7 +323,7 @@ class _StateVersiculo extends State<SelecionarVersiculoPage> {
           }
       ),
       floatingActionButton: FloatingActionButton(
-        child: Text('OK'),
+        child: OkiText('OK'),
         onPressed: _onOk,
       ),
     );

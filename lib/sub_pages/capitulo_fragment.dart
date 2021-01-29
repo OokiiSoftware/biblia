@@ -51,13 +51,10 @@ class _State extends State<CapituloFragment> with SingleTickerProviderStateMixin
 
   @override
   void initState() {
-    // if (versiculo != null)
-    {
-      _animationController =
-          AnimationController(vsync: this, duration: Duration(milliseconds: 300));
-      _colorTween = ColorTween(begin: Colors.white24, end: Colors.transparent)
-          .animate(_animationController);
-    }
+    _animationController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
+    _colorTween = ColorTween(begin: Colors.white24, end: Colors.transparent)
+        .animate(_animationController);
 
     super.initState();
     _init();
@@ -195,7 +192,7 @@ class _State extends State<CapituloFragment> with SingleTickerProviderStateMixin
       builder: (context) {
         return FlatButton(
           minWidth: double.infinity,
-          child: Text(isCapLido ? 'Desmarcar como Lido' : 'Marcar como Lido'),
+          child: OkiText(isCapLido ? 'Desmarcar como Lido' : 'Marcar como Lido'),
           onPressed: () => _onMarcarComoLido(isCapLido),
         );
       },
@@ -254,7 +251,7 @@ class _State extends State<CapituloFragment> with SingleTickerProviderStateMixin
     return RichText(
         text: TextSpan(
             style: new TextStyle(
-              fontSize: 14.0,
+              fontSize: Config.fontSize,
               color: OkiTheme.text,
             ),
             children: spanTextList
@@ -304,6 +301,7 @@ class _State extends State<CapituloFragment> with SingleTickerProviderStateMixin
     _animationController.addListener(_animationControllerListener);
     _animationController.addStatusListener((status) {
       _animationController.removeListener(_animationControllerListener);
+      _colorTween = null;
     });
     // if (scrollController?.position?.maxScrollExtent == 0)
     //   setState(() {

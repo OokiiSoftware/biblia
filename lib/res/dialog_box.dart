@@ -1,6 +1,8 @@
 import 'package:Biblia/res/strings.dart';
 import 'package:flutter/material.dart';
 
+import 'layouts.dart';
+
 class DialogResult {
   static const int noneValue = 50;
   static const int positiveValue = 12;
@@ -109,7 +111,7 @@ class DialogBox {
           StatefulBuilder(
             builder: (context, setState) =>
                 AlertDialog(
-                  title: title == null ? null : Text(title),
+                  title: title == null ? null : OkiTitleText(title),
                   content: SingleChildScrollView(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -119,19 +121,19 @@ class DialogBox {
                   contentPadding: contentPadding,
                   actions: [
                     if (auxBtnText.isNotEmpty) FlatButton(
-                      child: Text(auxBtnText),
+                      child: OkiText(auxBtnText),
                       onPressed: () =>
                           Navigator.pop(
                               context, DialogResult.aux),
                     ),
                     if (cancelButton) FlatButton(
-                      child: Text(negativeButton),
+                      child: OkiText(negativeButton),
                       onPressed: () =>
                           Navigator.pop(
                               context, DialogResult.negative),
                     ),
                     if (okButton) FlatButton(
-                      child: Text(positiveButton),
+                      child: OkiText(positiveButton),
                       onPressed: () =>
                           Navigator.pop(
                               context, DialogResult.positive),

@@ -13,7 +13,7 @@ class _MyState extends State<InfoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(Titles.INFORMACOES_PAGE, style: Styles.appBarText)),
+      appBar: AppBar(title: OkiAppBarText(Titles.INFORMACOES_PAGE)),
       body: Center(
         child: _appInfo(),
       ),
@@ -28,35 +28,38 @@ class _MyState extends State<InfoPage> {
     var dividerP = Padding(padding: EdgeInsets.only(top: 10, right: 5));
     var dividerG = Padding(padding: EdgeInsets.only(top: 30));
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-      //Icone
-      Image.asset(OkiIcons.ic_launcher,
-        width: 130,
-        height: 130,
-      ),
-      dividerG,
-      Text('${AppResources.APP_NAME}'),
-      dividerP,
-      Text('${Strings.VERSAO} : ${Aplication.packageInfo.version}'),
-      dividerG,
-      Text(Strings.CONTATOS),
-      dividerP,
-      GestureDetector(
-        child: Text(AppResources.app_email, style: TextStyle(color: OkiTheme.accent)),
-        onTap: () {Aplication.openEmail(AppResources.app_email, context);},
-      ),
-      dividerG,
-      Text(Strings.POR),
-      dividerP,
-      Tooltip(
-        message: AppResources.company_name,
-        child: Image.asset(OkiIcons.ic_oki_logo,
-          width: 80,
-          height: 80,
-        ),
-      ),
-    ]);
+          //Icone
+          Image.asset(OkiIcons.ic_launcher,
+            width: 130,
+            height: 130,
+          ),
+          dividerG,
+          OkiText('${AppResources.APP_NAME}'),
+          dividerP,
+          OkiText('${Strings.VERSAO} : ${Aplication.packageInfo.version}'),
+          dividerG,
+          OkiText(Strings.CONTATOS),
+          dividerP,
+          GestureDetector(
+            child: Text(AppResources.app_email, style: TextStyle(
+                color: OkiTheme.accent, fontSize: Config.fontSize)),
+            onTap: () {
+              Aplication.openEmail(AppResources.app_email, context);
+            },
+          ),
+          dividerG,
+          OkiText(Strings.POR),
+          dividerP,
+          Tooltip(
+            message: AppResources.company_name,
+            child: Image.asset(OkiIcons.ic_oki_logo,
+              width: 80,
+              height: 80,
+            ),
+          ),
+        ]);
   }
 
   //endregion

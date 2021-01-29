@@ -17,7 +17,7 @@ class Log {
             children: [
               Icon(isError ? Icons.clear : Icons.check, color: textColor),
               SizedBox(width: 12.0),
-              Text(texto, style: TextStyle(color: textColor)),
+              Text(texto, style: TextStyle(color: textColor, fontSize: 17)),
             ],
           ),
         ),

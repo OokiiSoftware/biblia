@@ -37,24 +37,21 @@ class _State extends State<PesquisaPage> {
     return Scaffold(
       appBar: AppBar(
         flexibleSpace: FlexibleSpaceBar(
-          titlePadding: EdgeInsets.only(top: 1),
-          title: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 45),
-            child: TextField(
-              controller: controller,
-              focusNode: _focusNode,
-              style: Styles.appBarText,
-              decoration: InputDecoration(
-                  hintText: MenuMain.pesquisa,
-                  hintStyle: Styles.appBarText,
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(width: 0, style: BorderStyle.none),
-                  )
-              ),
-              onSubmitted: (value) {
-                _onPesquisarClick();
-              },
+          titlePadding: EdgeInsets.only(left: 45, right: 80),
+          title: TextField(
+            controller: controller,
+            focusNode: _focusNode,
+            style: Styles.normalText,
+            decoration: InputDecoration(
+                hintText: MenuMain.pesquisa,
+                hintStyle: Styles.appBarText,
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(width: 0, style: BorderStyle.none),
+                )
             ),
+            onSubmitted: (value) {
+              _onPesquisarClick();
+            },
           ),
         ),
         actions: [
@@ -74,7 +71,7 @@ class _State extends State<PesquisaPage> {
         ],
       ),
       body: pesquisaList.isEmpty ?
-      ListTile(title: Text('${controller.text.isEmpty ? 'Clique em Pesquisar para digitar' : 'Sem Resultados'}')) :
+      ListTile(title: OkiText('${controller.text.isEmpty ? 'Clique no primeiro ícone para alterar o filtro' : 'Sem Resultados'}')) :
       ListView.builder(
         padding: EdgeInsets.fromLTRB(10, 10, 10, 80),
         itemCount: pesquisaList.length,
@@ -85,14 +82,14 @@ class _State extends State<PesquisaPage> {
               item: item,
               pesquisa: controller.text.trimRight().trimLeft(),
             ),
-            subtitle: Text('${item.livroName} ${item.capitulo}: ${item.versiculo}'),
+            subtitle: OkiText('${item.livroName} ${item.capitulo}: ${item.versiculo}'),
             onTap: () => _onResultClick(item),
           );
         },
       ),
       floatingActionButton: pesquisaList.isEmpty ? null :
       FloatingActionButton.extended(
-          label: Text('${pesquisaList.length} Versículos'),
+          label: OkiText('${pesquisaList.length} Versículos'),
           onPressed: null
       ),
     );
@@ -116,7 +113,7 @@ class _State extends State<PesquisaPage> {
     return RichText(
         text: TextSpan(
             style: new TextStyle(
-              fontSize: 14.0,
+              fontSize: Config.fontSize,
               color: OkiTheme.text,
             ),
           children: d
@@ -209,18 +206,18 @@ class _StateFiltroPage extends State<FiltroPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(Titles.ALTERAR_FILTRO_PAGE, style: Styles.appBarText)),
+      appBar: AppBar(title: OkiAppBarText(Titles.ALTERAR_FILTRO_PAGE)),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Pesquisar em:', style: TextStyle(fontSize: 18)),
+            OkiText('Pesquisar em:'),
             for (int i = 0; i< PesquisaType.toList().length; i++)
               RadioListTile(
                   value: i,
                   groupValue: currentValue,
-                  title: Text(PesquisaType(i).toString()),
+                  title: OkiText(PesquisaType(i).toString()),
                   onChanged: _onRadioChanged
               ),
 
@@ -236,7 +233,7 @@ class _StateFiltroPage extends State<FiltroPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Text('OK'),
+        child: OkiText('OK'),
         onPressed: _onOkClick,
       ),
     );

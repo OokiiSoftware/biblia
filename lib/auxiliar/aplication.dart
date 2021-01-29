@@ -99,7 +99,7 @@ class Aplication {
 
   static Future<bool> deleteReferencia(BuildContext context, Referencia item) async {
     var title = MyTexts.EXCLUIR_REFERENCIA_TITLE;
-    var content = [Text(MyTexts.EXCLUIR_REFERENCIA_MSG)];
+    var content = [OkiText(MyTexts.EXCLUIR_REFERENCIA_MSG)];
     var result = await DialogBox.dialogSimNao(context, title: title, content: content);
     if (result.isPositive) {
       if (await item.delete()) {
@@ -117,8 +117,8 @@ class Aplication {
     if (FirebaseOki.userOki == null) {
       var title = 'Login';
       var content = [
-        Text('Você precisa estar logado para realizar essa ação.'),
-        Text('Deseja fazer login agora?'),
+        OkiText('Você precisa estar logado para realizar essa ação.'),
+        OkiText('Deseja fazer login agora?'),
       ];
       var result = await DialogBox.dialogSimNao(context, title: title, content: content);
       if (result.isPositive) {

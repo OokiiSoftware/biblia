@@ -111,7 +111,7 @@ class _State extends State<YouTubePage> {
           ),
           builder: (context, player) => Scaffold(
             appBar: AppBar(
-              title: Text('Youtube', style: Styles.appBarText),
+              title: OkiAppBarText('Youtube'),
               actions: [
                 if (_isMyRef && _isPlayerReady)...[
                   IconButton(
@@ -139,7 +139,7 @@ class _State extends State<YouTubePage> {
             floatingActionButton: inProgress ? CircularProgressIndicator() :
             !_isPlayerReady ? null :
             FloatingActionButton.extended(
-              label: Text(referenciaLida ? MyTexts.DESMARCAR : MyTexts.MARCAR_COMO_VISTO),
+              label: OkiText(referenciaLida ? MyTexts.DESMARCAR : MyTexts.MARCAR_COMO_VISTO),
               backgroundColor: referenciaLida ? Colors.green : null,
               onPressed: _onMarcarComoVisto,
             ),
@@ -155,13 +155,7 @@ class _State extends State<YouTubePage> {
   Widget _text(String value) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 2, horizontal: 20),
-      child: Text(
-        value ?? '',
-        style: TextStyle(
-          color: OkiTheme.text,
-          fontWeight: FontWeight.w300,
-        ),
-      ),
+      child: OkiText(value ?? ''),
     );
   }
 

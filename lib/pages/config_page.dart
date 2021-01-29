@@ -11,13 +11,13 @@ class ConfigPage extends StatefulWidget{
 class _State extends State<ConfigPage> {
 
   //region Variaveis
-  // static const String TAG = 'ConfigPage';
 
   bool _isAdmin = false;
-  bool inProgress = false;
+  bool _inProgress = false;
   bool _isAutoBackup = false;
 
   String _currentThema;
+  double _currentFontSize;
 
   //endregion
 
@@ -29,6 +29,14 @@ class _State extends State<ConfigPage> {
     _isAdmin = FirebaseOki.isAdmin;
     _currentThema = Config.theme;
     _isAutoBackup = Config.autoBackup;
+    _currentFontSize = Config.fontSize;
+  }
+
+  @override
+  void deactivate() {
+    super.deactivate();
+    Config.fontSize = _currentFontSize;
+    Log.d(Tags.ConfigPage, 'deactivate');
   }
 
   @override
@@ -37,7 +45,7 @@ class _State extends State<ConfigPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(Titles.CONFIGURACOES_PAGE, style: Styles.appBarText),
+        title: OkiAppBarText(Titles.CONFIGURACOES_PAGE),
         actions: [
           if (_isAdmin)
             IconButton(
@@ -57,15 +65,27 @@ class _State extends State<ConfigPage> {
               child: Container(
                 color: OkiTheme.cardColor,
                 padding: EdgeInsets.all(10),
-                child: Row(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Tema'),
-                    Padding(padding: EdgeInsets.only(right: 10)),
-                    DropDownMenu(
-                      value: _currentThema,
-                      items: Arrays.thema,
-                      onChanged: _onThemeChanged,
+                    Row(
+                      children: [
+                        OkiText('Tema'),
+                        Padding(padding: EdgeInsets.only(right: 10)),
+                        DropDownMenu(
+                          value: _currentThema,
+                          items: Arrays.thema,
+                          onChanged: _onThemeChanged,
+                        ),
+                      ],
                     ),
+                    OkiText('Tamanho da fonte: ${_currentFontSize.toStringAsFixed(2)}'),
+                    Slider(
+                      min: 15,
+                        max: 25,
+                        value: _currentFontSize,
+                        onChanged: _onFontSizeChanged
+                    )
                   ],
                 ),
               ),
@@ -78,29 +98,27 @@ class _State extends State<ConfigPage> {
                 width: double.infinity,
                 padding: EdgeInsets.all(10),
                 child: Column(
-                  // crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Text('Backup'),
-                    ),
+                    OkiText('Backup'),
                     Padding(padding: EdgeInsets.only(top: 10)),
 
                     CheckboxListTile(
-                        title: Text('Backup Automatico'),
+                        title: OkiText('Backup Automatico'),
                         value: _isAutoBackup,
                         onChanged: _onAutoBackupChanged
                     ),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Text('Ultimo Backup: ${Config.ultimoBackup}'),
-                    ),
+                    OkiText('Ultimo Backup: ${Config.ultimoBackup}'),
+                    Divider(),
+                    OkiText('Com o backup automatico selecionado, seus dados de leitura serão salvos na nuvem em tempo real'),
                     if (!_isAutoBackup)
-                      FlatButton(
-                        minWidth: 200,
-                        color: OkiTheme.accent,
-                        child: Text('Fazer backup agora'),
-                        onPressed: _onFazerBackup,
+                      Center(
+                        child: FlatButton(
+                          minWidth: 200,
+                          color: OkiTheme.accent,
+                          child: OkiText('Fazer backup agora'),
+                          onPressed: _onFazerBackup,
+                        ),
                       ),
                   ],
                 ),
@@ -115,14 +133,12 @@ class _State extends State<ConfigPage> {
                 padding: EdgeInsets.all(10),
                 child: Column(
                   children: [
-                    Text(
-                        'Ajude-nos a melhorar enviando sugestões',
-                        textAlign: TextAlign.center),
+                    OkiText('Ajude-nos a melhorar enviando sugestões'),
                     Divider(),
                     FlatButton(
                       minWidth: 200,
                       color: OkiTheme.accent,
-                      child: Text(MyTexts.ENVIE_SUGESTAO, style: Styles.appBarText),
+                      child: OkiAppBarText(MyTexts.ENVIE_SUGESTAO),
                       onPressed: _onSugestaoCkick,
                     ),
                   ],
@@ -132,7 +148,7 @@ class _State extends State<ConfigPage> {
           ],
         ),
       ),
-      floatingActionButton: inProgress ? CircularProgressIndicator() : null,
+      floatingActionButton: _inProgress ? CircularProgressIndicator() : null,
     );
   }
 
@@ -151,6 +167,13 @@ class _State extends State<ConfigPage> {
     Config.theme = value;
     Brightness brightness = OkiTheme.getBrilho(value);
     await DynamicTheme.of(context).setBrightness(brightness);
+  }
+
+  void _onFontSizeChanged(double value) {
+    setState(() {
+      Config.fontSize = value;
+      _currentFontSize = value;
+    });
   }
 
   void _onAutoBackupChanged(bool value) {
@@ -206,7 +229,7 @@ class _State extends State<ConfigPage> {
   void _setInProgress(bool b) {
     if(!mounted) return;
     setState(() {
-      inProgress = b;
+      _inProgress = b;
     });
   }
 

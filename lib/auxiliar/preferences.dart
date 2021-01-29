@@ -33,11 +33,13 @@ class PreferencesKey {
   static const String AUTO_BACKUP = "AUTO_BACKUP";
   static const String ULTIMO_BACKUP = "ULTIMO_BACKUP";
   static const String BIBLIA_VERSION = "BIBLIA_VERSION";
+  static const String NOVIDADES = "NOVIDADES_01";
 
   static const String LIVRO = 'LIVRO';
   static const String TUTORIAL = 'tutorial_01';
   static const String ITEM_LIST_MODE = 'itemListMode';
   static const String CURRENT_CAPITULO = 'CURRENT_TAB_IN_MAIN_PAGE';
+  static const String FONTE_SIZE = 'FONTE_SIZE';
   static const String GENEROS = 'generos';
 
   static const String POST_AVANCADO = "POST_AVANCADO";

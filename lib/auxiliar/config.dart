@@ -3,6 +3,7 @@ import 'package:Biblia/res/import.dart';
 
 class Config {
   static int _currentCapitulo;
+  static double _fontSize;
   static String _livro;
   static String _autorName;
   static String _theme;
@@ -32,6 +33,12 @@ class Config {
     Preferences.setInt(PreferencesKey.CURRENT_CAPITULO, _currentCapitulo);
   }
 
+  static double get fontSize => _fontSize;
+  static set fontSize(double value) {
+    _fontSize = value;
+    Preferences.setDouble(PreferencesKey.FONTE_SIZE, value);
+  }
+
   static String get livro => _livro ?? _inicialLivro;
   static set livro(String value) {
     _livro = value;
@@ -59,6 +66,7 @@ class Config {
   //endregion
 
   static void readConfig() {
+    _fontSize = Preferences.getDouble(PreferencesKey.FONTE_SIZE, padrao: 16);
     _currentCapitulo = Preferences.getInt(PreferencesKey.CURRENT_CAPITULO, padrao: 1);
     _livro = Preferences.getString(PreferencesKey.LIVRO, padrao: _inicialLivro);
     _theme = Preferences.getString(PreferencesKey.THEME, padrao: Arrays.thema[0]);

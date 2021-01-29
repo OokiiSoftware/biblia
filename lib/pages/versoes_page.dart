@@ -31,7 +31,7 @@ class _State extends State<VersoesBibliaPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text(Titles.VERSOES_PAGE, style: Styles.appBarText),
+          title: OkiAppBarText(Titles.VERSOES_PAGE),
         actions: [
           IconButton(
               icon: Icon(Icons.refresh),
@@ -45,8 +45,8 @@ class _State extends State<VersoesBibliaPage> {
           BibliaVersion item = data[index];
 
           return ListTile(
-            title: Text(item.name),
-            subtitle: Text(item.version),
+            title: OkiTitleText(item.name),
+            subtitle: OkiText(item.version),
             tileColor: item.version == Config.bibliaVersion ? Colors.black45 : null,
             trailing: item.version == Config.bibliaLocalVersion ? null :
             item.isBaixado ?
@@ -121,7 +121,7 @@ class _State extends State<VersoesBibliaPage> {
 
   void _onItemDeleteClick(BibliaVersion item) async {
     var title = item.name;
-    var content = [Text(MyTexts.EXCLUIR_VERSAO_BIBLIA)];
+    var content = [OkiText(MyTexts.EXCLUIR_VERSAO_BIBLIA)];
     var result = await DialogBox.dialogSimNao(context, title: title, content: content);
     if (!result.isPositive)
       return;
