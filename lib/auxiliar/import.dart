@@ -3,6 +3,7 @@ export 'admin.dart';
 export 'aplication.dart';
 export 'config.dart';
 export 'criptografia.dart';
+export 'estudos.dart';
 export 'firebase.dart';
 export 'local_database.dart';
 export 'logs.dart';

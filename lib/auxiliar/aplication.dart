@@ -4,10 +4,12 @@ import 'package:Biblia/auxiliar/local_database.dart';
 import 'package:Biblia/model/import.dart';
 import 'package:Biblia/pages/import.dart';
 import 'package:Biblia/res/import.dart';
+import 'package:flutter/services.dart';
 import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'admin.dart';
+import 'estudos.dart';
 import 'navigate.dart';
 import 'offline_data.dart';
 import 'preferences.dart';
@@ -28,15 +30,20 @@ class Aplication {
   static Future<void> init() async {
     Log.d(TAG, 'init', 'iniciando');
 
-    Preferences.instance = await SharedPreferences.getInstance();
     await OfflineData.init();
+    await FirebaseOki.init();
+    await Preferences.init();
+    await Estudos.instance.load();
     await LocalDatabase.instance.load();
     packageInfo = await PackageInfo.fromPlatform();
-    await FirebaseOki.init();
 
     Admin.checkAdmin();
     Config.readConfig();
     Log.d(TAG, 'init', 'OK');
+  }
+
+  static void setOrientation(List<DeviceOrientation> orientacoes) {
+    SystemChrome.setPreferredOrientations(orientacoes);
   }
 
   static Future<String> buscarAtualizacao() async {
@@ -94,6 +101,20 @@ class Aplication {
       if (context != null)
         Log.snack(MyErros.ABRIR_EMAIL, isError: true);
       Log.e(TAG, 'openUrl', e);
+    }
+  }
+
+  static void openYouTube(String link, [BuildContext context]) async {
+    try {
+      if (await canLaunch(link)) {
+        await launch(link);
+      } else {
+        throw 'Could not launch $link';
+      }
+    } catch(e) {
+      if (context != null)
+        Log.snack(MyErros.ABRIR_YOUTUBE, isError: true);
+      Log.e(TAG, 'openYouTube', e);
     }
   }
 

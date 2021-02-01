@@ -1,7 +1,7 @@
 name: Biblia
 description: Textos da biblia com referencias de explicações.
 
-version: 1.0.5+5
+version: 1.0.6+6
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -48,3 +48,4 @@ flutter:
 
   assets:
     - assets/icons/
+    - assets/images/

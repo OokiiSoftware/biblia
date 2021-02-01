@@ -44,7 +44,7 @@ class _State extends State<YouTubePage> {
   void initState() {
     super.initState();
 
-    _setOrientation(DeviceOrientation.values);
+    Aplication.setOrientation(DeviceOrientation.values);
 
     _isMyRef = refecencia.userId == FirebaseOki.user?.uid ?? '';
     if (_user?.referencias?.containsKey(refecencia.id) ?? false) {
@@ -162,13 +162,9 @@ class _State extends State<YouTubePage> {
   Widget get _space => const SizedBox(height: 10);
 
   Future<bool> onGoBack() async {
-    _setOrientation([ DeviceOrientation.portraitUp ]);
+    Aplication.setOrientation([ DeviceOrientation.portraitUp ]);
     Navigator.pop(context, refecencia);
     return false;
-  }
-
-  void _setOrientation(List<DeviceOrientation> orientacoes) {
-    SystemChrome.setPreferredOrientations(orientacoes);
   }
 
   void listener() {

@@ -1,6 +1,5 @@
 import 'package:Biblia/res/strings.dart';
 import 'package:flutter/material.dart';
-
 import 'layouts.dart';
 
 class DialogResult {
@@ -37,11 +36,15 @@ enum DialogType {
 
 class DialogBox {
   static Future<DialogResult> dialogSimNao(BuildContext context,
-      {String title, List<Widget> content, EdgeInsets contentPadding}) async {
+      {String title, String auxBtnText, List<Widget> content,
+        EdgeInsets contentPadding, Function(bool value) onNotShowAgain}) async {
     return await _dialogAux(context, title: title,
         content: content,
+        auxBtnText: auxBtnText,
         contentPadding: contentPadding,
-        dialogType: DialogType.simNao);
+        onNotShowAgain: onNotShowAgain,
+        dialogType: DialogType.simNao
+    );
   }
 
   static Future<DialogResult> dialogCancelOK(BuildContext context,
@@ -85,6 +88,7 @@ class DialogBox {
     String negativeButton,
     List<Widget> content,
     EdgeInsets contentPadding,
+    Function(bool value) onNotShowAgain,
     @required DialogType dialogType,
   }) async {
     //region variaveis
@@ -103,6 +107,8 @@ class DialogBox {
     bool cancelButton = _showNegativeButton(dialogType);
 
     content ??= [];
+    bool naoMostrarNovamente = false;
+
     //endregion
 
     return await showDialog(
@@ -115,7 +121,32 @@ class DialogBox {
                   content: SingleChildScrollView(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: content,
+                        children: [
+                          for (var item in content)
+                            item,
+                          if (onNotShowAgain != null)...[
+                            Divider(),
+                            Row(
+                              children: [
+                                Checkbox(value: naoMostrarNovamente, onChanged: (value) {
+                                  setState(() {
+                                    naoMostrarNovamente = value;
+                                    onNotShowAgain.call(value);
+                                  });
+                                }),
+                                GestureDetector(
+                                  child: OkiText('Não mostrar novamente'),
+                                  onTap: () {
+                                    setState(() {
+                                      naoMostrarNovamente = !naoMostrarNovamente;
+                                      onNotShowAgain.call(naoMostrarNovamente);
+                                    });
+                                  },
+                                ),
+                              ],
+                            )
+                          ]
+                        ],
                       )
                   ),
                   contentPadding: contentPadding,

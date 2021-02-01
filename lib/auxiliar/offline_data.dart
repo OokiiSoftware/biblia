@@ -15,6 +15,7 @@ class OfflineData {
   static Future<void> init() async {
     await OfflineData._readDirectorys();
     await OfflineData.createDirectory('data');
+    Log.e(TAG, 'init', 'OK');
   }
 
   static Future<void> _readDirectorys() async {
@@ -94,6 +95,12 @@ class OfflineData {
       Log.e(TAG, 'deletefile', fileName, e);
       return false;
     }
+  }
+  static Future<bool> deleteDirectory(String path) async {
+    Directory dir = Directory(localPath + '/' + path);
+    if (await dir.exists())
+      await dir.delete(recursive: true);
+    return true;
   }
 
   static Future<String> _getDirectoryPath() async {

@@ -1,3 +1,4 @@
+import 'dart:ui' as ui;
 import 'package:Biblia/auxiliar/config.dart';
 import 'package:Biblia/model/import.dart';
 import 'package:Biblia/res/import.dart';
@@ -206,5 +207,30 @@ class OkiErrorText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(text, style: Styles.textEror);
+  }
+}
+
+class ShadowText extends StatelessWidget {
+  ShadowText(this.text, { this.style }) : assert(text != null);
+
+  final String text;
+  final TextStyle style;
+
+  Widget build(BuildContext context) {
+    return new ClipRect(
+      child: new Stack(
+        children: [
+          Text(
+            text,
+            style: style == null ? TextStyle(color: Colors.black.withOpacity(0.5)) :
+            style.copyWith(color: Colors.black.withOpacity(0.5)),
+          ),
+          BackdropFilter(
+            filter: new ui.ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
+            child: new Text(text, style: style),
+          ),
+        ],
+      ),
+    );
   }
 }

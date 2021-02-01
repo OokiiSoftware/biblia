@@ -7,6 +7,6 @@ class Styles {
   // static TextStyle text = TextStyle(color: OkiTheme.text);
   static TextStyle get appBarText => TextStyle(color: Colors.white);
   static TextStyle get normalText => TextStyle(color: OkiTheme.text, fontSize: Config.fontSize);
-  static TextStyle get titleText => TextStyle(color: OkiTheme.text, fontSize: Config.fontSize + 10);
+  static TextStyle get titleText => TextStyle(color: OkiTheme.text, fontSize: Config.fontSize + 5);
   static TextStyle get textEror => TextStyle(color: OkiTheme.textError, fontSize: Config.fontSize);
 }

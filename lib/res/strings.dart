@@ -76,10 +76,12 @@ class MyTexts {
 class MyErros {
   static const String ABRIR_LINK = 'Erro ao abrir o link';
   static const String ABRIR_EMAIL = 'Erro ao enviar email';
+  static const String ABRIR_YOUTUBE = 'Erro ao abrir o YouTube';
   static const String ERRO_GENERICO = 'Ocorreu um erro';
   static const String DELETE_REFERENCIA = 'Ocorreu um erro ao excluir.';
   static const String ERRO_ADD_LIDO = 'Não foi possível realizar essa ação';
   static const String USER_DADOS_SAVE = 'Não foi possível realizar essa ação';
+  static const String BAIXAR_ESTUDO = 'Não foi possível baixar esse estudo';
 }
 
 class MenuMain {
@@ -88,7 +90,9 @@ class MenuMain {
   static const String sobre = 'Sobre';
   static const String logout = 'Logout';
   static const String login = 'Login';
-  static const String dicas = 'Mostrar Dicas';
+  static const String dicas = 'Dicas';
+  static const String curiosidades = 'Curiosidades';
+  static const String estudos = 'Estudos';
   static const String add_referencia = 'Add Referência';
   static const String versoes = 'Versões';
   static const String minhas_referencias = 'Minhas Referências';
@@ -97,6 +101,7 @@ class MenuMain {
 class Tags {
   static const String CapituloFragment = 'CapituloFragment';
   static const String ConfigPage = 'ConfigPage';
+  static const String EstudosPage = 'EstudosPage';
   static const String MainPage = 'MainPage';
   static const String PesquisaPage = 'PesquisaPage';
   static const String SelecionarLivroPage = 'SelecionarLivroPage';

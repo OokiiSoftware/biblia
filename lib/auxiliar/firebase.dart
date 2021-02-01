@@ -110,8 +110,6 @@ class FirebaseOki {
   //region Metodos
 
   static Future<void> init() async {
-    Log.d(TAG, 'init', 'Firebase Iniciando');
-
     const firebaseUser_Null = 'firebaseUser Null';
     try {
       await app();
@@ -131,7 +129,7 @@ class FirebaseOki {
       //   throw new Exception(firebaseUser_Null);
 
       _atualizarUser();
-      Log.d(TAG, 'init', 'Firebase OK');
+      Log.d(TAG, 'init', 'OK');
     } catch (e) {
       Log.e(TAG, 'init', e, !e.toString().contains(firebaseUser_Null));
     }
@@ -181,6 +179,8 @@ class FirebaseChild {
   static const String BIBLIA = 'biblia';
   static const String REFERENCIAS = 'referencias';
   static const String VERSOES_BIBLIAS = 'versoes_biblias';
+  static const String ESTUDOS = 'estudos';
+  static const String TEMAS = 'temas';
 
   static const String LIVRO = 'livro';
   static const String LIVROS = 'livros';

@@ -5,6 +5,7 @@ import 'package:Biblia/res/import.dart';
 import 'package:Biblia/sub_pages/import.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'estudos_page.dart';
 import 'selecionar_livro_page.dart';
 
 class MainPage extends StatefulWidget {
@@ -205,7 +206,7 @@ class _State extends State<MainPage> with SingleTickerProviderStateMixin {
                   _onMenuItemSelected(MenuMain.minhas_referencias);
                 },
               ),
-
+            // Versões
             ListTile(
               leading: Icon(Icons.menu_book, color: draewrIconColor),
               title: OkiText('Versões'),
@@ -214,10 +215,29 @@ class _State extends State<MainPage> with SingleTickerProviderStateMixin {
                 _onMenuItemSelected(MenuMain.versoes);
               },
             ),
+            // Estudos
+            ListTile(
+              leading: Icon(Icons.library_books, color: draewrIconColor),
+              title: OkiText(MenuMain.estudos),
+              onTap: () {
+                _closeDrawer(context);
+                _onMenuItemSelected(MenuMain.estudos);
+              },
+            ),
+            // Curiosidades
+            ListTile(
+              leading: Icon(Icons.wb_incandescent_outlined, color: draewrIconColor),
+              title: OkiText(MenuMain.curiosidades),
+              onTap: () {
+                _closeDrawer(context);
+                _onMenuItemSelected(MenuMain.curiosidades);
+              },
+            ),
+            Divider(),
             // Dicas
             ListTile(
               leading: Icon(Icons.help_outline, color: draewrIconColor),
-              title: OkiText('Ver Dicas'),
+              title: OkiText(MenuMain.dicas),
               onTap: () {
                 _closeDrawer(context);
                 _onMenuItemSelected(MenuMain.dicas);
@@ -472,6 +492,12 @@ class _State extends State<MainPage> with SingleTickerProviderStateMixin {
         var result = await Navigate.to(context, VersoesBibliaPage());
         if (result != null && result is Livro)
           Navigate.toReplacement(context, MainPage(livro: result));
+        break;
+      case MenuMain.curiosidades:
+        Navigate.to(context, CuriosidadesPage());
+        break;
+      case MenuMain.estudos:
+        Navigate.to(context, EstudosPage());
         break;
       case MenuMain.dicas:
         _mostrarDicas(ignorePreferences: true);

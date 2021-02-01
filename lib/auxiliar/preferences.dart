@@ -1,4 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'logs.dart';
 
 class Preferences {
   static SharedPreferences instance;
@@ -15,6 +16,11 @@ class Preferences {
   static Future<bool> setString(String key, String value) async => await instance.setString(key, value);
 
   static bool containsKey(String key) => instance.containsKey(key);
+
+  static Future<void> init() async {
+    instance = await SharedPreferences.getInstance();
+    Log.e('Preferences', 'init', 'OK');
+  }
 }
 
 class PreferencesKey {
@@ -34,6 +40,7 @@ class PreferencesKey {
   static const String ULTIMO_BACKUP = "ULTIMO_BACKUP";
   static const String BIBLIA_VERSION = "BIBLIA_VERSION";
   static const String NOVIDADES = "NOVIDADES_01";
+  static const String AVISO_BAIXAR_ESTUDO = "AVISO_BAIXAR_ESTUDO_2";
 
   static const String LIVRO = 'LIVRO';
   static const String TUTORIAL = 'tutorial_01';
