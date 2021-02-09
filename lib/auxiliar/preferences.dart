@@ -19,7 +19,7 @@ class Preferences {
 
   static Future<void> init() async {
     instance = await SharedPreferences.getInstance();
-    Log.e('Preferences', 'init', 'OK');
+    Log.d('Preferences', 'init', 'OK');
   }
 }
 

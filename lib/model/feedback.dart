@@ -102,21 +102,21 @@ class Erro {
     "data": data,
   };
 
-//  Future<bool> salvar() async {
-//    try {
-//      var result = await getFirebase.databaseReference()
-//          .child(FirebaseChild.LOGS)
-//          .child(data)
-//          .set(toJson())
-//          .then((value) => true)
-//          .catchError((ex) => false);
-//      Log.d('Error', 'salvar', result);
-//      return result;
-//    } catch(e) {
-//      //Todo \(ºvº)/
-//      return false;
-//    }
-//  }
+ Future<bool> salvar() async {
+   try {
+     var result = await FirebaseOki.database
+         .child(FirebaseChild.LOGS)
+         .child(data)
+         .set(toJson())
+         .then((value) => true)
+         .catchError((ex) => false);
+     Log.d('Error', 'salvar', result);
+     return result;
+   } catch(e) {
+     //Todo \(ºvº)/
+     return false;
+   }
+ }
 
 //  Future<bool> _delete(String key) async {
 //    try {

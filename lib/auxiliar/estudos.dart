@@ -16,7 +16,10 @@ class Estudos {
   }
 
   Future<bool> load() async {
-    var temp = Estudo.fromJsonList(await OfflineData.read(offDataFileName));
+    var dataTemp = await OfflineData.read(offDataFileName);
+    if (dataTemp  == null)
+      return true;
+    var temp = Estudo.fromJsonList(dataTemp);
     if (temp != null)
       data = temp;
     Log.e(TAG, 'load', 'OK');

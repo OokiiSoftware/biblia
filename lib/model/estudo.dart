@@ -1,4 +1,3 @@
-import 'package:Biblia/auxiliar/import.dart';
 import 'package:Biblia/model/slider.dart';
 
 class Estudo {

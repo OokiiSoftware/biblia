@@ -7,14 +7,12 @@ import 'package:Biblia/res/import.dart';
 import 'package:flutter/services.dart';
 import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import 'admin.dart';
 import 'estudos.dart';
 import 'navigate.dart';
 import 'offline_data.dart';
 import 'preferences.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'config.dart';
 import 'logs.dart';
 
@@ -30,15 +28,50 @@ class Aplication {
   static Future<void> init() async {
     Log.d(TAG, 'init', 'iniciando');
 
-    await OfflineData.init();
-    await FirebaseOki.init();
-    await Preferences.init();
-    await Estudos.instance.load();
-    await LocalDatabase.instance.load();
+    try {
+      await OfflineData.init();
+    } catch(e) {
+      Log.e(TAG, 'init OfflineData', e, true);
+    }
+
+    try {
+      await FirebaseOki.init();
+    } catch(e) {
+      Log.e(TAG, 'init FirebaseOki', e, true);
+    }
+
+    try {
+      await Preferences.init();
+    } catch(e) {
+      Log.e(TAG, 'init Preferences', e, true);
+    }
+
+    try {
+      await Estudos.instance.load();
+    } catch(e) {
+      Log.e(TAG, 'init Estudos', e, true);
+    }
+
+    try {
+      await LocalDatabase.instance.load();
+    } catch(e) {
+      Log.e(TAG, 'init LocalDatabase', e, true);
+    }
+
+    try {
+      Admin.checkAdmin();
+    } catch(e) {
+      Log.e(TAG, 'init Admin', e, true);
+    }
+
+    try {
+      Config.load();
+    } catch(e) {
+      Log.e(TAG, 'init Config', e, true);
+    }
+
     packageInfo = await PackageInfo.fromPlatform();
 
-    Admin.checkAdmin();
-    Config.readConfig();
     Log.d(TAG, 'init', 'OK');
   }
 

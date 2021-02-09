@@ -15,7 +15,7 @@ class OfflineData {
   static Future<void> init() async {
     await OfflineData._readDirectorys();
     await OfflineData.createDirectory('data');
-    Log.e(TAG, 'init', 'OK');
+    Log.d(TAG, 'init', 'OK');
   }
 
   static Future<void> _readDirectorys() async {

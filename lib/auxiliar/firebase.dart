@@ -193,6 +193,7 @@ class FirebaseChild {
 
   static const String COMPLEMENTO = 'complemento';
   static const String ITEMS = 'items';
+  static const String LOGS = 'logs';
   static const String CLASSIFICACAO = 'classificacao';
   static const String ADMINISTRADORES = 'admins';
   static const String BUG_ANIME = 'bug_anime';

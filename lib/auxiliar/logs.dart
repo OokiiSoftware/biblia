@@ -1,3 +1,4 @@
+import 'package:Biblia/model/import.dart';
 import 'package:Biblia/res/import.dart';
 import 'package:flutter/material.dart';
 
@@ -64,14 +65,14 @@ class Log {
   }
 
   static _sendError(String tag, String metodo, String value) {
-    // String id = '';
+    String id = '';
 
-    // Erro e = Erro();
-    // e.data = DataHora.now();
-    // e.classe = tag;
-    // e.metodo = metodo;
-    // e.valor = value;
-    // e.userId = id;
-//    e.salvar();
+    Erro e = Erro();
+    e.data = DataHora.now();
+    e.classe = tag;
+    e.metodo = metodo;
+    e.valor = value;
+    e.userId = id;
+   e.salvar();
   }
 }

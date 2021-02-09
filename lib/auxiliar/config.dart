@@ -65,7 +65,7 @@ class Config {
 
   //endregion
 
-  static void readConfig() {
+  static void load() {
     _fontSize = Preferences.getDouble(PreferencesKey.FONTE_SIZE, padrao: 16);
     _currentCapitulo = Preferences.getInt(PreferencesKey.CURRENT_CAPITULO, padrao: 1);
     _livro = Preferences.getString(PreferencesKey.LIVRO, padrao: _inicialLivro);
@@ -74,7 +74,7 @@ class Config {
     _ultimoBackup = Preferences.getString(PreferencesKey.ULTIMO_BACKUP, padrao: 'Nenhum');
     _bibliaVersion = Preferences.getString(PreferencesKey.BIBLIA_VERSION, padrao: bibliaLocalVersion);
     _autoBackup = Preferences.getBool(PreferencesKey.AUTO_BACKUP, padrao: true);
-    PesquisaFiltro._read();
+    PesquisaFiltro._load();
   }
 }
 
@@ -123,7 +123,7 @@ class PesquisaFiltro {
     Preferences.setString(PreferencesKey.PESQUISA_LIVRO, value);
   }
 
-  static void _read() {
+  static void _load() {
     _pesquisaType = Preferences.getInt(PreferencesKey.PESQUISA_TYPE, padrao: PesquisaType.tudoValue);
     _livro = Preferences.getString(PreferencesKey.PESQUISA_LIVRO, padrao: 'Gênesis');
   }
